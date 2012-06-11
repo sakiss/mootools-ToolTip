@@ -204,18 +204,20 @@ var ToolTip = new Class({
 	 * @return string
 	 */
 	parseLinks: function(text) {
-		// Find and replace all http/https/ftp/ftps links that are not part of an existing html anchor
-		text = text.replace(/\b(href="|">)?(?:ht|f)tps?:\/\/[^<\s]+(?:\/|\b)/i, function($0, $1) {
-			return $1 ? $0 : '<a href="'+$0+'">'+$0+'</a>';
-		});
-		// Find and replace all naked www.links.com (without http://)
-		text = text.replace(/\b\b(:\/\/|">)?www(?:\.[a-z0-9][-a-z0-9]*)+\.[a-z]{2,6}\b/i, function($0, $1) {
-			return $1 ? $0 : '<a href="http://'+$0+'">'+$0+'</a>';
-		});
-		// Find and replace all email addresses that are not part of an existing html mailto anchor
-		text = text.replace(/\b(href=["']?mailto:|58;)?(?!\.)[-+_a-z0-9.]+(\.)?@(?![-.])[-a-z0-9.]+(\.)?\.[a-z]{2,6}\b(?!<\/a>)/i, function($0, $1) {
-			return $1 ? $0 : '<a href="mailto:'+$0+'">'+$0+'</a>';
-		});
+		if(isNaN(text)){
+			// Find and replace all http/https/ftp/ftps links that are not part of an existing html anchor
+			text = text.replace(/\b(href="|">)?(?:ht|f)tps?:\/\/[^<\s]+(?:\/|\b)/i, function($0, $1) {
+				return $1 ? $0 : '<a href="'+$0+'">'+$0+'</a>';
+			});
+			// Find and replace all naked www.links.com (without http://)
+			text = text.replace(/\b\b(:\/\/|">)?www(?:\.[a-z0-9][-a-z0-9]*)+\.[a-z]{2,6}\b/i, function($0, $1) {
+				return $1 ? $0 : '<a href="http://'+$0+'">'+$0+'</a>';
+			});
+			// Find and replace all email addresses that are not part of an existing html mailto anchor
+			text = text.replace(/\b(href=["']?mailto:|58;)?(?!\.)[-+_a-z0-9.]+(\.)?@(?![-.])[-a-z0-9.]+(\.)?\.[a-z]{2,6}\b(?!<\/a>)/i, function($0, $1) {
+				return $1 ? $0 : '<a href="mailto:'+$0+'">'+$0+'</a>';
+			});
+		}
 		return text;
 	}
 });
